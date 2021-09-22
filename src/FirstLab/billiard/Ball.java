@@ -49,13 +49,13 @@ public class Ball {
         x+=dx;
         y+=dy;
 
-//        if (checkIsInBilliardPocket()) {
-//            ((BallCanvas) this.canvas).remove(this);
-//            this.canvas.repaint();
-//            Result.ballCounter++;
-//            resultLabel.setText("RESULT: " + Result.ballCounter);
-//            return true;
-//        }
+        if (checkIsInBilliardPocket()) {
+            ((BallCanvas) this.canvas).remove(this);
+            this.canvas.repaint();
+            Result.ballCounter++;
+            resultLabel.setText("RESULT: " + Result.ballCounter);
+            return true;
+        }
 
         if(x<0){
             x = 0;

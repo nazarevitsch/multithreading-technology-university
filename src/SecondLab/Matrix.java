@@ -1,56 +1,39 @@
 package SecondLab;
 
-public class Matrix<T> {
+public class Matrix {
 
-    private T type;
-    private T[][] matrix;
-
-    public Matrix(T[][] matrix) {
-        this.matrix = matrix;
+    public static void check(int[][] a, int[][] b) throws Exception{
+        if (a[0].length != b.length || a.length != b[0].length) {
+            throw new Exception("EXCEPTION");
+        }
     }
 
-    public T getElement(int rowIndex, int columnIndex) {
-        return matrix[rowIndex][columnIndex];
-    }
-
-    public void setElement(int rowIndex, int columnIndex, T element) {
-        matrix[rowIndex][columnIndex] = element;
-    }
-
-    public int getHeight() {
-        return matrix.length;
-    }
-
-    public int getWidth() {
-        return matrix[0].length;
-    }
-
-    public static Matrix randomMatrix(int rowSize, int columnSize, int from, int to) {
-        Integer matrix[][] = new Integer[rowSize][columnSize];
+    public static int[][] randomMatrix(int rowSize, int columnSize, int from, int to) {
+        int matrix[][] = new int[rowSize][columnSize];
         for (int i = 0; i < rowSize; i++) {
-            matrix[i] = new Integer[columnSize];
+            matrix[i] = new int[columnSize];
             for (int l = 0; l < columnSize; l++) {
                 matrix[i][l] = (int) (Math.random() * (to - from)) + from;
             }
         }
-        return new Matrix(matrix);
+        return matrix;
     }
 
-    public static Matrix zeroMatrix(int rowSize, int columnSize) {
-        Integer matrix[][] = new Integer[rowSize][columnSize];
+    public static int[][] zeroMatrix(int rowSize, int columnSize) {
+        int matrix[][] = new int[rowSize][columnSize];
         for (int i = 0; i < rowSize; i++) {
-            matrix[i] = new Integer[columnSize];
+            matrix[i] = new int[columnSize];
             for (int l = 0; l < columnSize; l++) {
                 matrix[i][l] = 0;
             }
         }
-        return new Matrix(matrix);
+        return matrix;
     }
 
-    public static void print(Matrix matrix) {
-        for (int i = 0; i < matrix.getHeight(); i++) {
-            for (int l = 0; l < matrix.getWidth(); l++) {
-                System.out.print(matrix.getElement(i, l) + "  ");
+    public static void print(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int l = 0; l < matrix[i].length; l++) {
+                System.out.printf("%7d", matrix[i][l]);
             }
             System.out.println();
         }

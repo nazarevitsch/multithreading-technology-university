@@ -7,16 +7,16 @@ import FirstLab.printer.PrinterThread1;
 import FirstLab.printer.PrinterThread2;
 import SecondLab.linear.LinearMatrixMultiplication;
 import SecondLab.Matrix;
+import SecondLab.noparallel.NoParallelMatrixMultiplication;
 
 import javax.swing.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
 
-    public static void main(String[] args) {
-        firstTest();
-//        secondTest();
-//        thirdTest();
-//        testMatrix1();
+    public static void main(String[] args) throws Exception {
+        thirdTest();
+//        testMatrix();
     }
 
     public static void firstTest() {
@@ -40,8 +40,10 @@ public class Main {
     public static void thirdTest() {
         Counter counter = new Counter();
 
-        IncrementThread incrementThread = new IncrementThread(counter);
-        DecrementThread decrementThread = new DecrementThread(counter);
+        ReentrantLock locker = new ReentrantLock();
+
+        IncrementThread incrementThread = new IncrementThread(counter, locker);
+        DecrementThread decrementThread = new DecrementThread(counter, locker);
 
         incrementThread.start();
         decrementThread.start();
@@ -55,20 +57,33 @@ public class Main {
         System.out.println("Result: " + counter.getNumber());
     }
 
-    public static void testMatrix1() throws Exception{
-        LinearMatrixMultiplication multiplication = new LinearMatrixMultiplication();
+    public static void testMatrix() throws Exception{
+        LinearMatrixMultiplication linearMultiplication = new LinearMatrixMultiplication();
 
-        Integer[][] m = {{1,2,3,4,5,6,7},
-                {8,9,10,11,12,13,14},
-                {15,16,17,18,19,20,21},
-                {22,23,24,25,26,27,28},
-                {29,30,31,32,33,34,35},
-                {36,37,38,39,40,41,42},
-                {43,44,45,46,47,48,49}};
-        Matrix<Integer> matrix = new Matrix(m);
+//        int[][] a = {{1,2,3}, {4,5,6}};
+//        int[][] b = {{1,2}, {3,4}, {5,6}};
 
-//        Matrix matrix = Matrix.randomMatrix(100, 100, 1, 9);
+//        int[][] a = {{1,2}, {3,4}, {5,6}};
+        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
+//        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
+//
+//        int[][] a = Matrix.randomMatrix(4000, 4000, 1, 9);
 
-        Matrix r = multiplication.multiplication(matrix, matrix, 4);
+
+//        long start = System.currentTimeMillis();
+
+        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
+//        int[][] resultP1 = linearMultiplication.multiplication(b,b,0)
+        int[][] resultP2 = linearMultiplication.multiplication(b,b,0);
+
+
+//        long finish = System.currentTimeMillis();
+//        double t = (finish - start) / 1000.0;
+
+//        System.out.println("Time: " + t + " sec.");
+        Matrix.print(resultNo);
+        System.out.println();
+        Matrix.print(resultP2);
     }
+
 }

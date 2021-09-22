@@ -10,7 +10,7 @@ public class Printer {
         }
         System.out.println("|");
         flag = true;
-        notify();
+        notifyAll();
     }
 
     public synchronized void print2() throws InterruptedException {

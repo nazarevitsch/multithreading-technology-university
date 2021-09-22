@@ -4,20 +4,20 @@ public class Counter {
     private int number;
     private boolean flag;
 
-    public synchronized void increment() throws InterruptedException {
+    public void increment() throws InterruptedException {
 //        if (!flag) {
 //            wait();
 //        }
-        number++;
+            number++;
 //        flag = false;
 //        notifyAll();
     }
 
-    public synchronized void decrement() throws InterruptedException{
+    public void decrement() throws InterruptedException{
 //        if (flag) {
 //            wait();
 //        }
-        number--;
+            number--;
 //        flag = true;
 //        notifyAll();
     }

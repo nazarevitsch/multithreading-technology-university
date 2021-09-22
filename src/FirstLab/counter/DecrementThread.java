@@ -1,21 +1,28 @@
 package FirstLab.counter;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class DecrementThread extends Thread {
 
     private Counter counter;
+    private ReentrantLock locker;
 
-    public DecrementThread(Counter counter) {
+    public DecrementThread(Counter counter, ReentrantLock locker) {
         this.counter = counter;
+        this.locker = locker;
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < 100000; i++) {
-            try {
+        try {
+            locker.lock();
+            for (int i = 0; i < 100000; i++) {
                 counter.decrement();
-            } catch (InterruptedException e) {
-
             }
+        } catch (InterruptedException e) {
+
+        } finally {
+            locker.unlock();
         }
     }
 }
