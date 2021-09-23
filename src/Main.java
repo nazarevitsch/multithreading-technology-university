@@ -5,6 +5,7 @@ import FirstLab.counter.IncrementThread;
 import FirstLab.printer.Printer;
 import FirstLab.printer.PrinterThread1;
 import FirstLab.printer.PrinterThread2;
+import SecondLab.fox.FoxMatrixMultiplication;
 import SecondLab.linear.LinearMatrixMultiplication;
 import SecondLab.Matrix;
 import SecondLab.noparallel.NoParallelMatrixMultiplication;
@@ -15,8 +16,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        thirdTest();
-//        testMatrix();
+//        thirdTest();
+        testMatrix();
     }
 
     public static void firstTest() {
@@ -59,31 +60,31 @@ public class Main {
 
     public static void testMatrix() throws Exception{
         LinearMatrixMultiplication linearMultiplication = new LinearMatrixMultiplication();
+        FoxMatrixMultiplication foxMatrixMultiplication = new FoxMatrixMultiplication();
 
 //        int[][] a = {{1,2,3}, {4,5,6}};
 //        int[][] b = {{1,2}, {3,4}, {5,6}};
 
 //        int[][] a = {{1,2}, {3,4}, {5,6}};
-        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
+//        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
 //        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
-//
-//        int[][] a = Matrix.randomMatrix(4000, 4000, 1, 9);
+//        int[][] b = {{1,2}, {3,4}};
+        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
 
+        long start = System.currentTimeMillis();
 
-//        long start = System.currentTimeMillis();
+//        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
+//        int[][] resultP1 = linearMultiplication.multiplication(b,b,0);
+//        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
 
-        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
-//        int[][] resultP1 = linearMultiplication.multiplication(b,b,0)
-        int[][] resultP2 = linearMultiplication.multiplication(b,b,0);
+        long finish = System.currentTimeMillis();
+        double t = (finish - start) / 1000.0;
 
+        System.out.println("Time: " + t + " sec.");
 
-//        long finish = System.currentTimeMillis();
-//        double t = (finish - start) / 1000.0;
-
-//        System.out.println("Time: " + t + " sec.");
-        Matrix.print(resultNo);
-        System.out.println();
-        Matrix.print(resultP2);
+//        Matrix.print(resultNo);
+//        System.out.println();
+//        Matrix.print(resultP2);
     }
 
 }
