@@ -58,7 +58,7 @@ public class Main {
         System.out.println("Result: " + counter.getNumber());
     }
 
-    public static void testMatrix() throws Exception{
+    public static void testMatrix() throws Exception {
         LinearMatrixMultiplication linearMultiplication = new LinearMatrixMultiplication();
         FoxMatrixMultiplication foxMatrixMultiplication = new FoxMatrixMultiplication();
 
@@ -68,23 +68,29 @@ public class Main {
 //        int[][] a = {{1,2}, {3,4}, {5,6}};
 //        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
 //        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
-//        int[][] b = {{1,2}, {3,4}};
-        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
+//        int[][] b = Matrix.randomMatrix(3000, 3000, 1, 9);
 
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
 
 //        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
-//        int[][] resultP1 = linearMultiplication.multiplication(b,b,0);
-//        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
+//        int[][] resultP1 = linearMultiplication.multiplication(b,b,100);
+//        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,300, 300);
 
-        long finish = System.currentTimeMillis();
-        double t = (finish - start) / 1000.0;
-
-        System.out.println("Time: " + t + " sec.");
+//        long finish = System.currentTimeMillis();
+//        double t = (finish - start) / 1000.0;
+//        System.out.println("Time: " + t + " sec.");
 
 //        Matrix.print(resultNo);
 //        System.out.println();
-//        Matrix.print(resultP2);
+//        Matrix.print(resultP1);
+
+
+//        double[] array = {11.978, 13.291, 11.953, 14.218};
+//        double sum = 0;
+//        for (int i = 0; i < array.length; i++) {
+//            sum += array[i];
+//        }
+//        System.out.println(sum / array.length);
     }
 
 }

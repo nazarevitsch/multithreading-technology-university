@@ -8,6 +8,7 @@ public class NoParallelMatrixMultiplication {
         Matrix.check(a, b);
         int[][] result = Matrix.zeroMatrix(a.length, b[0].length);
 
+        long start = System.currentTimeMillis();
         for (int i = 0; i < a.length; i++) {
             for (int l = 0; l < b[i].length; l++) {
                 for (int k = 0; k < b.length; k++) {
@@ -15,6 +16,9 @@ public class NoParallelMatrixMultiplication {
                 }
             }
         }
+        long finish = System.currentTimeMillis();
+        double t = (finish - start) / 1000.0;
+        System.out.println("Time Simple: " + t + " sec.");
         return result;
     }
 }

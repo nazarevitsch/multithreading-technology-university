@@ -2,14 +2,18 @@ package SecondLab.fox;
 
 public class FoxThread extends Thread {
 
-
     private Block blockA;
     private Block blockB;
     private Block blockC;
 
+
     public FoxThread(Block blockA, Block blockB, Block blockC) {
         this.blockA = blockA;
         this.blockB = blockB;
+        this.blockC = blockC;
+    }
+
+    public FoxThread(Block blockC) {
         this.blockC = blockC;
     }
 
@@ -24,7 +28,8 @@ public class FoxThread extends Thread {
         }
     }
 
-    public Block getBlocksC() {
-        return blockC;
+    public void setBlocksAAndB(Block blockA, Block blockB) {
+        this.blockA = blockA;
+        this.blockB = blockB;
     }
 }

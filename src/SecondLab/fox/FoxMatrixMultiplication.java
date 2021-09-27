@@ -16,6 +16,7 @@ public class FoxMatrixMultiplication {
             foxThreads[i] = new FoxThread[blocksC[i].length];
         }
 
+        long start = System.currentTimeMillis();
         boolean firstLoop = false;
         for (int stage = 0; stage < foxThreads.length; stage++) {
             for (int i = 0; i < foxThreads.length; i++) {
@@ -36,6 +37,9 @@ public class FoxMatrixMultiplication {
                     foxThreads[i][l].join();
             }
         }
+        long finish = System.currentTimeMillis();
+        double t = (finish - start) / 1000.0;
+        System.out.println("Time FOX: " + t + " sec.");
         return unionBlocks(blocksC, blockHeight);
     }
 
@@ -58,12 +62,6 @@ public class FoxMatrixMultiplication {
                 dividedMatrix[i][l] = new Block(matrixSmall);
             }
         }
-//        for (int i = 0; i < dividedMatrix.length; i++) {
-//            for (int l = 0; l < dividedMatrix[i].length; l++) {
-//                System.out.println("\n");
-//                Matrix.print(dividedMatrix[i][l].getMatrix());
-//            }
-//        }
         return dividedMatrix;
     }
 
