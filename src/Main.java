@@ -68,21 +68,26 @@ public class Main {
 //        int[][] a = {{1,2}, {3,4}, {5,6}};
 //        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
 //        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
-//        int[][] b = Matrix.randomMatrix(3000, 3000, 1, 9);
+        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
 
 //        long start = System.currentTimeMillis();
 
 //        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
-//        int[][] resultP1 = linearMultiplication.multiplication(b,b,100);
-//        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,300, 300);
+        int[][] resultP1 = linearMultiplication.multiplication(b,b,100);
+        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
 
 //        long finish = System.currentTimeMillis();
 //        double t = (finish - start) / 1000.0;
 //        System.out.println("Time: " + t + " sec.");
 
+//        System.out.println("No parallel:");
 //        Matrix.print(resultNo);
 //        System.out.println();
+//        System.out.println("Linear algorithm:");
 //        Matrix.print(resultP1);
+//        System.out.println();
+//        System.out.println("Fox algorithm:");
+//        Matrix.print(resultP2);
 
 
 //        double[] array = {11.978, 13.291, 11.953, 14.218};

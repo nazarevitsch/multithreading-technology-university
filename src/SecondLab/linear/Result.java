@@ -2,5 +2,17 @@ package SecondLab.linear;
 
 public class Result {
 
-    int[][] matrix;
+    private int[][] matrix;
+
+    public Result(int[][] matrix) {
+        this.matrix = matrix;
+    }
+
+    public int[][] getMatrix() {
+        return matrix;
+    }
+
+    public void setMatrix(int[][] matrix) {
+        this.matrix = matrix;
+    }
 }

@@ -34,7 +34,7 @@ public class FoxMatrixMultiplication {
 
         for (int i = 0; i < foxThreads.length; i++) {
             for (int l = 0; l < foxThreads[i].length; l++) {
-                    foxThreads[i][l].join();
+                foxThreads[i][l].join();
             }
         }
         long finish = System.currentTimeMillis();
