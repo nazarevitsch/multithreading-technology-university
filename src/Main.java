@@ -7,17 +7,26 @@ import FirstLab.printer.PrinterThread1;
 import FirstLab.printer.PrinterThread2;
 import SecondLab.fox.FoxMatrixMultiplication;
 import SecondLab.linear.LinearMatrixMultiplication;
-import SecondLab.Matrix;
-import SecondLab.noparallel.NoParallelMatrixMultiplication;
+import ThirdLab.bank.TransferThread;
+import ThirdLab.bank.Bank;
+import ThirdLab.producer_consumer.Consumer;
+import ThirdLab.producer_consumer.Drop;
+import ThirdLab.producer_consumer.Producer;
+import ThirdLab.students.Group;
+import ThirdLab.students.MarkBook;
+import ThirdLab.students.Student;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-//        thirdTest();
-        testMatrix();
+//        bankTest();
+//        producerConsumerTest();
+        markBookTest();
     }
 
     public static void firstTest() {
@@ -62,23 +71,13 @@ public class Main {
         LinearMatrixMultiplication linearMultiplication = new LinearMatrixMultiplication();
         FoxMatrixMultiplication foxMatrixMultiplication = new FoxMatrixMultiplication();
 
-//        int[][] a = {{1,2,3}, {4,5,6}};
-//        int[][] b = {{1,2}, {3,4}, {5,6}};
-
-//        int[][] a = {{1,2}, {3,4}, {5,6}};
 //        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
 //        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
-        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
-
-//        long start = System.currentTimeMillis();
+//        int[][] b = Matrix.randomMatrix(4000, 4000, 1, 9);
 
 //        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
-        int[][] resultP1 = linearMultiplication.multiplication(b,b,100);
-        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
-
-//        long finish = System.currentTimeMillis();
-//        double t = (finish - start) / 1000.0;
-//        System.out.println("Time: " + t + " sec.");
+//        int[][] resultP1 = linearMultiplication.multiplication(b,b,10);
+//        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,400, 400);
 
 //        System.out.println("No parallel:");
 //        Matrix.print(resultNo);
@@ -88,14 +87,42 @@ public class Main {
 //        System.out.println();
 //        System.out.println("Fox algorithm:");
 //        Matrix.print(resultP2);
-
-
-//        double[] array = {11.978, 13.291, 11.953, 14.218};
-//        double sum = 0;
-//        for (int i = 0; i < array.length; i++) {
-//            sum += array[i];
-//        }
-//        System.out.println(sum / array.length);
     }
 
+    public static void bankTest() {
+        int NACCOUNTS = 10;
+        int INITIAL_BALANCE = 10000;
+
+        Bank b = new Bank(NACCOUNTS, INITIAL_BALANCE);
+        ReentrantLock locker = new ReentrantLock();
+
+        int i;
+        for (i = 0; i < NACCOUNTS; i++) {
+            TransferThread t = new TransferThread(b, i, INITIAL_BALANCE, locker);
+            t.setPriority(Thread.NORM_PRIORITY + i % 2);
+            t.start();
+        }
+    }
+
+    public static void producerConsumerTest() {
+        Drop drop = new Drop();
+        (new Thread(new Producer(drop, 100))).start();
+        (new Thread(new Consumer(drop))).start();
+    }
+
+    public static void markBookTest() {
+        int numberOfGroup = 3;
+        int numberOfStudentsInGroup = 6;
+
+        MarkBook markBook = new MarkBook();
+        for (int i = 0; i < numberOfGroup; i++) {
+            List<Student> students = new ArrayList<>();
+            for (int l = 0; l < numberOfStudentsInGroup; l++) {
+                students.add(new Student("Student G" + i + "-N" + l));
+            }
+            markBook.putGroup(new Group(students));
+        }
+
+        System.out.println(markBook);
+    }
 }
