@@ -6,18 +6,21 @@ public class AssistantThread extends Thread {
 
     private MarkBook markBook;
     private int group;
-    private ReentrantLock locker;
     private int weeksCount;
 
-    public AssistantThread(MarkBook markBook, int group, ReentrantLock locker, int weeksCount) {
+    public AssistantThread(MarkBook markBook, int group, int weeksCount) {
         this.markBook = markBook;
         this.group = group;
-        this.locker = locker;
         this.weeksCount = weeksCount;
     }
 
     @Override
-    public void run(){
-
+    public void run() {
+        try {
+            for (int i = 0; i < weeksCount; i++) {
+                markBook.putMarksByAssistant(group);
+            }
+        } catch (InterruptedException e) {
+        }
     }
 }

@@ -5,6 +5,10 @@ public class Point {
     private int markL;
     private int markA;
 
+    public Point(int markA) {
+        this.markA = markA;
+    }
+
     public int getMarkL() {
         return markL;
     }

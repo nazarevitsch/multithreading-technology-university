@@ -12,9 +12,7 @@ import ThirdLab.bank.Bank;
 import ThirdLab.producer_consumer.Consumer;
 import ThirdLab.producer_consumer.Drop;
 import ThirdLab.producer_consumer.Producer;
-import ThirdLab.students.Group;
-import ThirdLab.students.MarkBook;
-import ThirdLab.students.Student;
+import ThirdLab.students.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -24,9 +22,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        bankTest();
+//        bankTest();
 //        producerConsumerTest();
-//        markBookTest();
+        markBookTest();
     }
 
     public static void firstTest() {
@@ -110,23 +108,24 @@ public class Main {
         (new Thread(new Consumer(drop))).start();
     }
 
-//    public static void markBookTest() {
-//        int numberOfGroup = 3;
-//        int numberOfStudentsInGroup = 6;
-//
-//        MarkBook markBook = new MarkBook();
-//        for (int i = 0; i < numberOfGroup; i++) {
-//            List<Student> students = new ArrayList<>();
-//            for (int l = 0; l < numberOfStudentsInGroup; l++) {
-//                students.add(new Student("Student G" + i + "-N" + l));
-//            }
-//            markBook.putGroup(new Group(students));
-//        }
-//
-//        for (int i = 0; i < numberOfGroup; i++) {
-//
-//        }
-//
-//        System.out.println(markBook);
-//    }
+    public static void markBookTest() {
+        int numberOfGroup = 3;
+        int numberOfStudentsInGroup = 6;
+
+        int WEEKS = 5;
+
+        MarkBook markBook = new MarkBook(numberOfGroup);
+        for (int i = 0; i < numberOfGroup; i++) {
+            List<Student> students = new ArrayList<>();
+            for (int l = 0; l < numberOfStudentsInGroup; l++) {
+                students.add(new Student("Student G" + i + "-N" + l));
+            }
+            markBook.putGroup(new Group(students));
+        }
+
+        for (int i = 0; i < numberOfGroup; i++) {
+            new AssistantThread(markBook, i, WEEKS).start();
+        }
+        new LecturerThread(markBook, WEEKS).start();
+    }
 }
