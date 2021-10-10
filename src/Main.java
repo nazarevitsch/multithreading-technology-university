@@ -24,9 +24,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-//        bankTest();
+        bankTest();
 //        producerConsumerTest();
-        markBookTest();
+//        markBookTest();
     }
 
     public static void firstTest() {
@@ -110,19 +110,23 @@ public class Main {
         (new Thread(new Consumer(drop))).start();
     }
 
-    public static void markBookTest() {
-        int numberOfGroup = 3;
-        int numberOfStudentsInGroup = 6;
-
-        MarkBook markBook = new MarkBook();
-        for (int i = 0; i < numberOfGroup; i++) {
-            List<Student> students = new ArrayList<>();
-            for (int l = 0; l < numberOfStudentsInGroup; l++) {
-                students.add(new Student("Student G" + i + "-N" + l));
-            }
-            markBook.putGroup(new Group(students));
-        }
-
-        System.out.println(markBook);
-    }
+//    public static void markBookTest() {
+//        int numberOfGroup = 3;
+//        int numberOfStudentsInGroup = 6;
+//
+//        MarkBook markBook = new MarkBook();
+//        for (int i = 0; i < numberOfGroup; i++) {
+//            List<Student> students = new ArrayList<>();
+//            for (int l = 0; l < numberOfStudentsInGroup; l++) {
+//                students.add(new Student("Student G" + i + "-N" + l));
+//            }
+//            markBook.putGroup(new Group(students));
+//        }
+//
+//        for (int i = 0; i < numberOfGroup; i++) {
+//
+//        }
+//
+//        System.out.println(markBook);
+//    }
 }

@@ -16,22 +16,20 @@ public class TransferThread extends Thread {
         bank = b;
         fromAccount = from;
         maxAmount = max;
-        this.locker = locker;
+//        this.locker = locker;
     }
 
     public void run() {
         try {
             while (!interrupted()) {
-                locker.lock();
+//                locker.lock();
                 for (int i = 0; i < REPS; i++) {
                     int toAccount = (int) (bank.size() * Math.random());
                     int amount = (int) (maxAmount * Math.random() / REPS);
                     bank.transfer(fromAccount, toAccount, amount);
                     Thread.sleep(1);
                 }
-                System.out.println(fromAccount);
-                locker.unlock();
-                Thread.sleep(100);
+//                locker.unlock();
             }
         } catch (InterruptedException e) {
         }

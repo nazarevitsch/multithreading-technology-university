@@ -1,29 +1,46 @@
 package ThirdLab.bank;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Bank {
     public static final int NTEST = 10000;
-    private final int[] accounts;
-    private long ntransacts;
+    private final AtomicInteger[] accounts;
+    private final AtomicLong ntransacts;
+
+//    private final int[] accounts;
+//    private long ntransacts;
 
     public Bank(int n, int initialBalance) {
-        accounts = new int[n];
-        Arrays.fill(accounts, initialBalance);
+        accounts = new AtomicInteger[n];
+        for (int i = 0; i < accounts.length; i++) {
+            accounts[i] = new AtomicInteger(initialBalance);
+        }
+        ntransacts = new AtomicLong(0);
+//        accounts = new int[n];
+//        Arrays.fill(accounts, initialBalance);
     }
 
     public void transfer(int from, int to, int amount) throws InterruptedException {
-        accounts[from] -= amount;
-        accounts[to] += amount;
-        ntransacts++;
-        if (ntransacts % NTEST == 0)
+        accounts[from].addAndGet(-amount);
+        accounts[to].addAndGet(amount);
+        if (ntransacts.incrementAndGet() % NTEST == 0){
             test(from);
+        }
+//        accounts[from] -= amount;
+//        accounts[to] += amount;
+//        ntransacts++;
+//        if (ntransacts % NTEST == 0)
+//            test(from);
     }
 
     public void test(int from) {
         int sum = 0;
-        for (int i = 0; i < accounts.length; i++)
-            sum += accounts[i];
+        for (int i = 0; i < accounts.length; i++) {
+//            sum += accounts[i];
+            sum += accounts[i].get();
+        }
         System.out.println("From: " + from + " Transactions:" + ntransacts + " Sum: " + sum);
     }
 
