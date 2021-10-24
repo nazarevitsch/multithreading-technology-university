@@ -17,7 +17,7 @@ public class LecturerThread extends Thread {
         try {
             for (int i = 0; i < weeksCount; i++) {
                 markBook.putMarksByLecturer(i);
-                Thread.sleep(860);
+                Thread.sleep(1500);
             }
         } catch (InterruptedException e){}
     }

@@ -5,8 +5,11 @@ import FirstLab.counter.IncrementThread;
 import FirstLab.printer.Printer;
 import FirstLab.printer.PrinterThread1;
 import FirstLab.printer.PrinterThread2;
+import FourthLab.world_count_length.LengthCount;
+import SecondLab.Matrix;
 import SecondLab.fox.FoxMatrixMultiplication;
 import SecondLab.linear.LinearMatrixMultiplication;
+import SecondLab.noparallel.NoParallelMatrixMultiplication;
 import ThirdLab.bank.TransferThread;
 import ThirdLab.bank.Bank;
 import ThirdLab.producer_consumer.Consumer;
@@ -15,6 +18,7 @@ import ThirdLab.producer_consumer.Producer;
 import ThirdLab.students.*;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
@@ -22,9 +26,49 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-//        bankTest();
-//        producerConsumerTest();
-        markBookTest();
+        testLengthWords();
+    }
+
+    public static void bankTest() {
+        int NACCOUNTS = 10;
+        int INITIAL_BALANCE = 10000;
+
+        Bank b = new Bank(NACCOUNTS, INITIAL_BALANCE);
+        ReentrantLock locker = new ReentrantLock();
+
+        int i;
+        for (i = 0; i < NACCOUNTS; i++) {
+            TransferThread t = new TransferThread(b, i, INITIAL_BALANCE, locker);
+            t.setPriority(Thread.NORM_PRIORITY + i % 2);
+            t.start();
+        }
+    }
+
+    public static void producerConsumerTest() {
+        Drop drop = new Drop();
+        (new Thread(new Producer(drop, 500))).start();
+        (new Thread(new Consumer(drop))).start();
+    }
+
+    public static void markBookTest() {
+        int numberOfGroup = 3;
+        int numberOfStudentsInGroup = 6;
+
+        int WEEKS = 5;
+
+        MarkBook markBook = new MarkBook(numberOfGroup);
+        for (int i = 0; i < numberOfGroup; i++) {
+            List<Student> students = new ArrayList<>();
+            for (int l = 0; l < numberOfStudentsInGroup; l++) {
+                students.add(new Student("Student G" + i + "-N" + l));
+            }
+            markBook.putGroup(new Group(students));
+        }
+
+        for (int i = 0; i < numberOfGroup; i++) {
+            new AssistantThread(markBook, i, WEEKS).start();
+        }
+        new LecturerThread(markBook, WEEKS).start();
     }
 
     public static void firstTest() {
@@ -71,11 +115,11 @@ public class Main {
 
 //        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
 //        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
-//        int[][] b = Matrix.randomMatrix(4000, 4000, 1, 9);
+        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
 
 //        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
-//        int[][] resultP1 = linearMultiplication.multiplication(b,b,10);
-//        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,400, 400);
+//        int[][] resultP1 = linearMultiplication.multiplication(b,b,0);
+        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
 
 //        System.out.println("No parallel:");
 //        Matrix.print(resultNo);
@@ -87,45 +131,8 @@ public class Main {
 //        Matrix.print(resultP2);
     }
 
-    public static void bankTest() {
-        int NACCOUNTS = 10;
-        int INITIAL_BALANCE = 10000;
-
-        Bank b = new Bank(NACCOUNTS, INITIAL_BALANCE);
-        ReentrantLock locker = new ReentrantLock();
-
-        int i;
-        for (i = 0; i < NACCOUNTS; i++) {
-            TransferThread t = new TransferThread(b, i, INITIAL_BALANCE, locker);
-            t.setPriority(Thread.NORM_PRIORITY + i % 2);
-            t.start();
-        }
+    public static void testLengthWords() {
+        LengthCount lengthCount = new LengthCount(new File("src/FourthLab/world_count_length/test_text.txt"));
     }
 
-    public static void producerConsumerTest() {
-        Drop drop = new Drop();
-        (new Thread(new Producer(drop, 100))).start();
-        (new Thread(new Consumer(drop))).start();
-    }
-
-    public static void markBookTest() {
-        int numberOfGroup = 3;
-        int numberOfStudentsInGroup = 6;
-
-        int WEEKS = 5;
-
-        MarkBook markBook = new MarkBook(numberOfGroup);
-        for (int i = 0; i < numberOfGroup; i++) {
-            List<Student> students = new ArrayList<>();
-            for (int l = 0; l < numberOfStudentsInGroup; l++) {
-                students.add(new Student("Student G" + i + "-N" + l));
-            }
-            markBook.putGroup(new Group(students));
-        }
-
-        for (int i = 0; i < numberOfGroup; i++) {
-            new AssistantThread(markBook, i, WEEKS).start();
-        }
-        new LecturerThread(markBook, WEEKS).start();
-    }
 }

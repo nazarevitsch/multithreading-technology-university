@@ -22,10 +22,10 @@ public class FoxMatrixMultiplication {
             for (int i = 0; i < foxThreads.length; i++) {
                 for (int l = 0; l < foxThreads[i].length; l++) {
                     int k = i + stage > foxThreads.length - 1 ? i + stage - foxThreads.length : i + stage;
-                    foxThreads[i][l] = new FoxThread(blocksA[i][k], blocksB[k][l], blocksC[i][l]);
                     if (firstLoop) {
                         foxThreads[i][l].join();
                     }
+                    foxThreads[i][l] = new FoxThread(blocksA[i][k], blocksB[k][l], blocksC[i][l]);
                     foxThreads[i][l].start();
                 }
             }

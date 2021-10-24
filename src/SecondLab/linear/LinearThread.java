@@ -33,27 +33,4 @@ public class LinearThread extends Thread {
         this.a[index] = a;
         this.result[index] = result;
     }
-
-//    private int[] a;
-//    private int[] b;
-//    private int[] c;
-//
-//    private boolean flag1;
-//    private boolean flag2;
-//
-//    private int index;
-//
-//    public LinearThread(int[] a, int[] b, int[] c, int index) {
-//        this.a = a;
-//        this.b = b;
-//        this.c = c;
-//        this.index = index;
-//    }
-//
-//    @Override
-//    public void run() {
-//        for (int i = 0; i < c.length; i++) {
-//            c[i] += a[index] * b[i];
-//        }
-//    }
 }

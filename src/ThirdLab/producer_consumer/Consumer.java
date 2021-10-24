@@ -14,7 +14,7 @@ public class Consumer implements Runnable {
         for (int number = drop.take(); number >= 0; number = drop.take()) {
             System.out.println("Number:  " + number);
             try {
-                Thread.sleep(random.nextInt(100));
+                Thread.sleep(random.nextInt(55));
             } catch (InterruptedException e) {}
         }
     }

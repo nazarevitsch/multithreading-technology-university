@@ -4,7 +4,7 @@ public class Counter {
     private int number;
     private boolean flag;
 
-    public void increment() throws InterruptedException {
+    public synchronized void increment() throws InterruptedException {
 //        if (!flag) {
 //            wait();
 //        }

@@ -20,7 +20,7 @@ public class DecrementThread extends Thread {
                 counter.decrement();
             }
         } catch (InterruptedException e) {
-
+            System.out.println(1);
         } finally {
             locker.unlock();
         }

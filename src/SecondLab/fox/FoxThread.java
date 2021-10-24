@@ -13,10 +13,6 @@ public class FoxThread extends Thread {
         this.blockC = blockC;
     }
 
-    public FoxThread(Block blockC) {
-        this.blockC = blockC;
-    }
-
     @Override
     public void run() {
         for (int i = 0; i < blockA.getMatrix().length; i++) {
@@ -28,8 +24,4 @@ public class FoxThread extends Thread {
         }
     }
 
-    public void setBlocksAAndB(Block blockA, Block blockB) {
-        this.blockA = blockA;
-        this.blockB = blockB;
-    }
 }
