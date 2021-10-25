@@ -5,7 +5,7 @@ import FirstLab.counter.IncrementThread;
 import FirstLab.printer.Printer;
 import FirstLab.printer.PrinterThread1;
 import FirstLab.printer.PrinterThread2;
-import FourthLab.world_count_length.LengthCount;
+import FourthLab.calculate_statistic.Statistic;
 import SecondLab.Matrix;
 import SecondLab.fox.FoxMatrixMultiplication;
 import SecondLab.linear.LinearMatrixMultiplication;
@@ -20,6 +20,7 @@ import ThirdLab.students.*;
 import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -117,8 +118,8 @@ public class Main {
 //        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
         int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
 
-//        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
-//        int[][] resultP1 = linearMultiplication.multiplication(b,b,0);
+        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
+        int[][] resultP1 = linearMultiplication.multiplication(b,b,0);
         int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
 
 //        System.out.println("No parallel:");
@@ -132,7 +133,9 @@ public class Main {
     }
 
     public static void testLengthWords() {
-        LengthCount lengthCount = new LengthCount(new File("src/FourthLab/world_count_length/test_text.txt"));
+        Statistic lengthCount = new Statistic(new File("src/FourthLab/calculate_statistic/test_text.txt"));
+        lengthCount.calculateMultiThreads();
+        lengthCount.calculateOneThread();
     }
 
 }
