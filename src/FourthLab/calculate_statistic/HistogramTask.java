@@ -8,7 +8,6 @@ import java.util.concurrent.RecursiveTask;
 
 public class HistogramTask extends RecursiveTask<HistogramTable> {
 
-    private static final int wordsPerTask = 30;
     private List<String> words;
 
     public HistogramTask(List<String> words) {
@@ -17,7 +16,7 @@ public class HistogramTask extends RecursiveTask<HistogramTable> {
 
     @Override
     protected HistogramTable compute() {
-        if (words.size() > wordsPerTask) {
+        if (words.size() > Statistic.WORDS_PER_TASK) {
             HistogramTable table = new HistogramTable();
             CountLetterTask.invokeAll(createSubTasks())
                     .stream()

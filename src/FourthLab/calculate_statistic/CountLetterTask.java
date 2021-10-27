@@ -8,7 +8,6 @@ import java.util.concurrent.RecursiveTask;
 
 public class CountLetterTask extends RecursiveTask<Integer> {
 
-    private static final int wordsPerTask = 30;
     private List<String> words;
 
     public CountLetterTask(List<String> words) {
@@ -17,7 +16,7 @@ public class CountLetterTask extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        if (words.size() > wordsPerTask) {
+        if (words.size() > Statistic.WORDS_PER_TASK) {
             return CountLetterTask.invokeAll(createSubTasks())
                     .stream()
                     .mapToInt(ForkJoinTask::join)

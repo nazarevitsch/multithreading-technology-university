@@ -8,7 +8,6 @@ import java.util.concurrent.RecursiveTask;
 
 public class MiddleCurvatureDeviationTask extends RecursiveTask<Double> {
 
-    private static final int wordsPerTask = 30;
     private List<String> words;
     private double middleLettersPerWord;
 
@@ -19,7 +18,7 @@ public class MiddleCurvatureDeviationTask extends RecursiveTask<Double> {
 
     @Override
     protected Double compute() {
-        if (words.size() > wordsPerTask) {
+        if (words.size() > Statistic.WORDS_PER_TASK) {
             return CountLetterTask.invokeAll(createSubTasks())
                     .stream()
                     .mapToDouble(ForkJoinTask::join)

@@ -20,8 +20,8 @@ public class LinearMatrixMultiplication {
             }
             linearThread[i].start();
         }
-        for (int i = 0; i < linearThread.length; i++) {
-            linearThread[i].join();
+        for (LinearThread thread : linearThread) {
+            thread.join();
         }
         long finish = System.currentTimeMillis();
         double t = (finish - start) / 1000.0;

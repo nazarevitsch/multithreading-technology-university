@@ -6,6 +6,7 @@ import FirstLab.printer.Printer;
 import FirstLab.printer.PrinterThread1;
 import FirstLab.printer.PrinterThread2;
 import FourthLab.calculate_statistic.Statistic;
+import FourthLab.previous_exercise.ForkJoinMatrixMultiplication;
 import SecondLab.Matrix;
 import SecondLab.fox.FoxMatrixMultiplication;
 import SecondLab.linear.LinearMatrixMultiplication;
@@ -20,14 +21,15 @@ import ThirdLab.students.*;
 import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        testLengthWords();
+//        testLengthWords();
+//        testPrevious();
+
     }
 
     public static void bankTest() {
@@ -118,9 +120,9 @@ public class Main {
 //        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
         int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
 
-        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
+//        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
         int[][] resultP1 = linearMultiplication.multiplication(b,b,0);
-        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
+//        int[][] resultP2 = foxMatrixMultiplication.multiplication(b,b,100, 100);
 
 //        System.out.println("No parallel:");
 //        Matrix.print(resultNo);
@@ -133,9 +135,21 @@ public class Main {
     }
 
     public static void testLengthWords() {
-        Statistic lengthCount = new Statistic(new File("src/FourthLab/calculate_statistic/test_text.txt"));
-        lengthCount.calculateMultiThreads();
+//        Statistic lengthCount = new Statistic(new File("src/FourthLab/calculate_statistic/test_text.txt"));
+        Statistic lengthCount = new Statistic(new File("src/FourthLab/calculate_statistic/master_and_margarita.txt"));
+
         lengthCount.calculateOneThread();
+        lengthCount.calculateMultiThreads();
+    }
+
+    public static void testPrevious() throws Exception{
+        ForkJoinMatrixMultiplication forkJoinMatrixMultiplication = new ForkJoinMatrixMultiplication();
+//        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
+        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
+
+        int[][] result = forkJoinMatrixMultiplication.multiplication(b, b, 1);
+
+//        Matrix.print(result);
     }
 
 }
