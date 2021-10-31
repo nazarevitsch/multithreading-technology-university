@@ -9,10 +9,10 @@ import FourthLab.calculate_statistic.Statistic;
 import FourthLab.previous_exercise.ForkJoinMatrixMultiplication;
 import FourthLab.search_same_words.SearchSameWordsTaskInFolder;
 import FourthLab.search_same_words.WordsOccurringTable;
+import FourthLab.search_word.SearchStatement;
 import SecondLab.Matrix;
 import SecondLab.fox.FoxMatrixMultiplication;
 import SecondLab.linear.LinearMatrixMultiplication;
-import SecondLab.noparallel.NoParallelMatrixMultiplication;
 import ThirdLab.bank.TransferThread;
 import ThirdLab.bank.Bank;
 import ThirdLab.producer_consumer.Consumer;
@@ -32,7 +32,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        testLengthWords();
 //        testPrevious();
-        testSearchSameWords();
+//        testSearchSameWords();
+        testSearchStatementInDocuments();
     }
 
     public static void bankTest() {
@@ -155,14 +156,24 @@ public class Main {
 //        Matrix.print(result);
     }
 
-    public static void testSearchSameWords() throws Exception{
-        SearchSameWordsTaskInFolder search = new SearchSameWordsTaskInFolder(new File("src/FourthLab/calculate_statistic/master_and_margarita.txt"));
+    public static void testSearchSameWords() {
+        SearchSameWordsTaskInFolder search = new SearchSameWordsTaskInFolder(new File("src/FourthLab/search_same_words/test"));
 
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
         WordsOccurringTable table = forkJoinPool.invoke(search);
 
-        System.out.println(table.get("w"));
+        System.out.println(table.get("to").size());
         System.out.println(table.getKeys());
+    }
+
+    public static void testSearchStatementInDocuments() {
+        String searchedStatement = "the";
+//        File file1 = new File("src/FourthLab/search_word/test");
+        File file2 = new File("src/FourthLab/search_word/test/test_text.txt");
+
+        SearchStatement searchStatement = new SearchStatement(searchedStatement, file2);
+
+        SearchStatement.print(searchStatement.search());
     }
 
 }
