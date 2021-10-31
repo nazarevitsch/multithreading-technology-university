@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class SearchStatementInDocumentTask extends RecursiveTask<List<WordOccurring>> {
 
-    private static final int LINES_PER_TASK = 10;
+    private static final int LINES_PER_TASK = 100;
     private List<Line> lines;
     private String currentFileName;
 
@@ -43,47 +43,56 @@ public class SearchStatementInDocumentTask extends RecursiveTask<List<WordOccurr
 
     private List<WordOccurring> calculate() {
         List<WordOccurring> occurring = new ArrayList<>();
-        List<String> words;
+
+        List<String> words = new ArrayList<>();
+        List<SpecialLine> wordsInLine = new ArrayList<>();
+        for (int i = 0; i < lines.size(); i++) {
+            List<String> a = Arrays.stream(lines.get(i).getLine().split(" "))
+                    .map(el -> el.replaceAll("\\W", ""))
+                    .map(String::toLowerCase)
+                    .collect(Collectors.toList());
+
+            wordsInLine.add(new SpecialLine(lines.get(i).getNumberOfLine(), a.size()));
+            words.addAll(a);
+        }
 
         WordOccurring wordOccurring = new WordOccurring();
-
-        int currentStatementIndex = -1;
+        wordOccurring.setFileName(this.currentFileName);
         boolean flag = false;
-
-        for (int i = 0; i < lines.size(); i++) {
-            words = Arrays.stream(lines.get(i).getLine().split(" "))
-                    .map(el -> el.replaceAll("\\W", "")).map(String::toLowerCase).collect(Collectors.toList());
-            for (int j = 0; j < words.size(); j++) {
-
-                for (int l = currentStatementIndex == -1 ? 0 : currentStatementIndex; l < SearchStatement.SEARCHED_STATEMENT.length; l++) {
-                    if (SearchStatement.SEARCHED_STATEMENT[l].equals(words.get(j))) {
-                        wordOccurring.setLine(lines.get(i).getNumberOfLine());
-                        wordOccurring.addPercentage(SearchStatement.PERCENTAGES[l]);
-                        flag = true;
-                        if (j + 1 >= words.size()) {
-                            currentStatementIndex = l + 1;
-                            flag = true;
-                            break;
-                        } else {
-                            flag = false;
-                            j++;
-                        }
-                    } else {
-                        flag = false;
-                        if (currentStatementIndex != -1) {
-                            occurring.add(wordOccurring);
-                            wordOccurring = new WordOccurring();
-                            currentStatementIndex = -1;
+        for (int i = 0; i < words.size(); i++) {
+            for (int l = 0; l < SearchStatement.SEARCHED_STATEMENT.length; l++) {
+                if (words.get(i).equals(SearchStatement.SEARCHED_STATEMENT[l])) {
+                    if (!flag) {
+                        int sum = 0;
+                        for (int j = 0; j < wordsInLine.size(); j++) {
+                            sum += wordsInLine.get(j).getWordsInLine();
+                            if (i < sum) {
+                                wordOccurring.setLine(wordsInLine.get(j).getRealLine());
+                                break;
+                            }
                         }
                     }
-                }
-                if (currentStatementIndex != -1 && flag) {
-                    occurring.add(wordOccurring);
-                    wordOccurring = new WordOccurring();
-                    currentStatementIndex = -1;
+                    wordOccurring.addPercentage(SearchStatement.PERCENTAGES[l]);
+                    if (l + 1 < SearchStatement.SEARCHED_STATEMENT.length && i + 1 < words.size()) {
+                        i++;
+                    }
+                    flag = true;
+                } else {
+                    if (flag) {
+                        occurring.add(wordOccurring);
+                        wordOccurring = new WordOccurring();
+                        wordOccurring.setFileName(this.currentFileName);
+                        flag = false;
+                        break;
+                    }
                 }
             }
-            flag = false;
+            if (flag) {
+                occurring.add(wordOccurring);
+                wordOccurring = new WordOccurring();
+                wordOccurring.setFileName(this.currentFileName);
+                flag = false;
+            }
         }
         return occurring;
     }

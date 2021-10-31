@@ -167,13 +167,14 @@ public class Main {
     }
 
     public static void testSearchStatementInDocuments() {
-        String searchedStatement = "the";
-//        File file1 = new File("src/FourthLab/search_word/test");
-        File file2 = new File("src/FourthLab/search_word/test/test_text.txt");
+//        String searchedStatement = "you were there";
+        String searchedStatement = "search of the Lower City";
+        File file1 = new File("src/FourthLab/search_word/test");
+//        File file2 = new File("src/FourthLab/search_word/test/new_test.txt");
 
-        SearchStatement searchStatement = new SearchStatement(searchedStatement, file2);
+        SearchStatement searchStatement = new SearchStatement(searchedStatement, file1);
 
-        SearchStatement.print(searchStatement.search());
+        SearchStatement.print(searchStatement.search(), 0.8);
     }
 
 }
