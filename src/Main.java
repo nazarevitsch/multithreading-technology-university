@@ -7,6 +7,8 @@ import FirstLab.printer.PrinterThread1;
 import FirstLab.printer.PrinterThread2;
 import FourthLab.calculate_statistic.Statistic;
 import FourthLab.previous_exercise.ForkJoinMatrixMultiplication;
+import FourthLab.search_same_words.SearchSameWordsTaskInFolder;
+import FourthLab.search_same_words.WordsOccurringTable;
 import SecondLab.Matrix;
 import SecondLab.fox.FoxMatrixMultiplication;
 import SecondLab.linear.LinearMatrixMultiplication;
@@ -22,6 +24,7 @@ import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
@@ -29,7 +32,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        testLengthWords();
 //        testPrevious();
-
+        testSearchSameWords();
     }
 
     public static void bankTest() {
@@ -150,6 +153,16 @@ public class Main {
         int[][] result = forkJoinMatrixMultiplication.multiplication(b, b, 1);
 
 //        Matrix.print(result);
+    }
+
+    public static void testSearchSameWords() throws Exception{
+        SearchSameWordsTaskInFolder search = new SearchSameWordsTaskInFolder(new File("src/FourthLab/calculate_statistic/master_and_margarita.txt"));
+
+        ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
+        WordsOccurringTable table = forkJoinPool.invoke(search);
+
+        System.out.println(table.get("w"));
+        System.out.println(table.getKeys());
     }
 
 }
