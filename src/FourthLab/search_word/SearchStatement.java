@@ -19,7 +19,7 @@ public class SearchStatement {
         double sum = Arrays.stream(SEARCHED_STATEMENT).mapToInt(String::length).sum();
         for (int i = 0; i < PERCENTAGES.length; i++) {
             PERCENTAGES[i] = (double) SEARCHED_STATEMENT[i].length() / sum;
-            System.out.println(SEARCHED_STATEMENT[i] + " = " + PERCENTAGES[i]);
+//            System.out.println(SEARCHED_STATEMENT[i] + " = " + PERCENTAGES[i]);
         }
     }
 

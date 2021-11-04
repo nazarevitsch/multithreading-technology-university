@@ -1,3 +1,4 @@
+import FifthLab.Model;
 import FirstLab.billiard.BounceFrame;
 import FirstLab.counter.Counter;
 import FirstLab.counter.DecrementThread;
@@ -31,9 +32,13 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 //        testLengthWords();
+//        testMatrix();
 //        testPrevious();
 //        testSearchSameWords();
-        testSearchStatementInDocuments();
+//        testSearchStatementInDocuments();
+
+
+        testModel1();
     }
 
     public static void bankTest() {
@@ -121,8 +126,8 @@ public class Main {
         FoxMatrixMultiplication foxMatrixMultiplication = new FoxMatrixMultiplication();
 
 //        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
-//        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
-        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
+        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
+//        int[][] b = Matrix.randomMatrix(2000, 2000, 1, 9);
 
 //        int[][] resultNo = NoParallelMatrixMultiplication.multiplication(b,b);
         int[][] resultP1 = linearMultiplication.multiplication(b,b,0);
@@ -132,8 +137,8 @@ public class Main {
 //        Matrix.print(resultNo);
 //        System.out.println();
 //        System.out.println("Linear algorithm:");
-//        Matrix.print(resultP1);
-//        System.out.println();
+        Matrix.print(resultP1);
+        System.out.println();
 //        System.out.println("Fox algorithm:");
 //        Matrix.print(resultP2);
     }
@@ -148,12 +153,12 @@ public class Main {
 
     public static void testPrevious() throws Exception{
         ForkJoinMatrixMultiplication forkJoinMatrixMultiplication = new ForkJoinMatrixMultiplication();
-//        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
-        int[][] b = Matrix.randomMatrix(1000, 1000, 1, 9);
+        int[][] b = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
+//        int[][] b = Matrix.randomMatrix(2000, 2000, 1, 9);
 
         int[][] result = forkJoinMatrixMultiplication.multiplication(b, b, 1);
 
-//        Matrix.print(result);
+        Matrix.print(result);
     }
 
     public static void testSearchSameWords() {
@@ -162,8 +167,9 @@ public class Main {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
         WordsOccurringTable table = forkJoinPool.invoke(search);
 
-        System.out.println(table.get("to").size());
-        System.out.println(table.getKeys());
+        System.out.println("OCCURRING: " + table.get("to").size() + " times.");
+        System.out.println(table.get("to"));
+//        System.out.println(table.getKeys());
     }
 
     public static void testSearchStatementInDocuments() {
@@ -174,7 +180,15 @@ public class Main {
 
         SearchStatement searchStatement = new SearchStatement(searchedStatement, file1);
 
-        SearchStatement.print(searchStatement.search(), 0.8);
+        System.out.println("Statement: " + searchedStatement);
+        SearchStatement.print(searchStatement.search(), 0.7);
+    }
+
+
+
+
+    public static void testModel1() {
+        Model.model();
     }
 
 }

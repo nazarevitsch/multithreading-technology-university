@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Statistic {
 
-    public static final int WORDS_PER_TASK = 10000;
+    public static final int WORDS_PER_TASK = 30000;
 
     private List<String> words;
     private ForkJoinPool forkJoinPool;
