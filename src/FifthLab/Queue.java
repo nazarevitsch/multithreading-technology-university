@@ -9,7 +9,7 @@ public class Queue {
     private int usedTasks;
 
     public synchronized Client take() throws InterruptedException{
-        while (size == 0 || usedTasks == 3) {
+        while (size == 0 || usedTasks == Constants.CASHIER_SIZE) {
             wait();
         }
         Client client = first.getClient();

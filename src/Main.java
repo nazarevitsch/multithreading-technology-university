@@ -34,11 +34,13 @@ public class Main {
 //        testLengthWords();
 //        testMatrix();
 //        testPrevious();
+
 //        testSearchSameWords();
 //        testSearchStatementInDocuments();
 
-
-        testModel1();
+//        testModel1();
+//        testModel2();
+        testModel3();
     }
 
     public static void bankTest() {
@@ -184,11 +186,59 @@ public class Main {
         SearchStatement.print(searchStatement.search(), 0.7);
     }
 
-
-
-
     public static void testModel1() {
-        Model.model();
+        FifthLab.StatisticCollector statistic1 = new FifthLab.StatisticCollector();
+
+        Model model1 = new Model(1, statistic1);
+        model1.start();
+
+        try {
+            model1.join();
+            System.out.println(statistic1.collect());
+        } catch (Exception e) {}
     }
 
+    public static void testModel2() {
+        FifthLab.StatisticCollector statistic1 = new FifthLab.StatisticCollector();
+        FifthLab.StatisticCollector statistic2 = new FifthLab.StatisticCollector();
+        FifthLab.StatisticCollector statistic3 = new FifthLab.StatisticCollector();
+        FifthLab.StatisticCollector statistic4 = new FifthLab.StatisticCollector();
+
+
+        Model model1 = new Model(1, statistic1);
+        Model model2 = new Model(2, statistic2);
+        Model model3 = new Model(3, statistic3);
+        Model model4 = new Model(4, statistic4);
+
+        model1.start();
+        model2.start();
+        model3.start();
+        model4.start();
+
+        try {
+            model1.join();
+            System.out.println(statistic1.collect());
+
+            model2.join();
+            System.out.println(statistic2.collect());
+
+            model3.join();
+            System.out.println(statistic3.collect());
+
+            model4.join();
+            System.out.println(statistic4.collect());
+        } catch (Exception e) {}
+    }
+
+    public static void testModel3() {
+        FifthLab.StatisticCollector statistic1 = new FifthLab.StatisticCollector();
+
+        Model model1 = new Model(1, statistic1);
+        model1.start();
+
+        try {
+            model1.join();
+            System.out.println(statistic1.collect());
+        } catch (Exception e) {}
+    }
 }

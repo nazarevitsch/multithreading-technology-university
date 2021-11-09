@@ -7,26 +7,31 @@ public class ClientProducer extends Thread {
     private Queue queue;
     private int count;
     private  ExecutorService executor;
-    private int rejected;
+    private StatisticCollector statistic;
+    private int modelId;
 
-    public ClientProducer(Queue queue, ExecutorService executor) {
+    public ClientProducer(Queue queue, ExecutorService executor, StatisticCollector statistic, int modelId) {
         this.queue = queue;
         this.executor = executor;
+        this.statistic = statistic;
+        this.modelId = modelId;
     }
 
     @Override
     public synchronized void run() {
-        while (count < 30) {
+        while (!executor.isShutdown()) {
             try {
-                Thread.sleep((int) (Math.random() * 1000) + 1500);
-                if (queue.size() < 5) {
-                    queue.put(new Client(queue, ++count));
+                Thread.sleep((int) (Math.random() *
+                        (Constants.TIME_CLIENT_PRODUCER_TO_MILLISECONDS
+                                - Constants.TIME_CLIENT_PRODUCER_FROM_MILLISECONDS))
+                        + Constants.TIME_CLIENT_PRODUCER_FROM_MILLISECONDS);
+
+                if (queue.size() < Constants.MAX_QUEUE_SIZE) {
+                    queue.put(new Client(queue, ++count, modelId));
                 } else {
-                    rejected++;
+                    statistic.increaseRejectCount();
                 }
             } catch (InterruptedException e) {}
         }
-        executor.shutdown();
-        System.out.println("==========  " + rejected + "  ==========");
     }
 }

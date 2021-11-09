@@ -6,25 +6,27 @@ public class Client implements Callable<Result> {
 
     private Queue queue;
     private long id;
+    private int modelId;
 
-    public Client(Queue queue, long id) {
-        System.out.println("CREATED / ID=" + id);
+    public Client(Queue queue, long id, int modelId) {
         this.id = id;
         this.queue = queue;
+        this.modelId = modelId;
+//        System.out.println(id + " / " + modelId + " = CREATED");
     }
 
     @Override
     public Result call() {
-//        queue.increment();
-        System.out.println("START / ID=" + this.id);
+//        System.out.println(id + " / " + modelId + " = START");
         long start = System.currentTimeMillis();
         try {
-            Thread.sleep((int) (Math.random() * 5000) + 10000);
-        } catch (InterruptedException e) {
+            Thread.sleep((int) (Math.random() * (Constants.TIME_CASHIER_TO_MILLISECONDS
+                    - Constants.TIME_CASHIER_FROM_MILLISECONDS))
+                    + Constants.TIME_CASHIER_FROM_MILLISECONDS);
+        } catch (InterruptedException e) {}
 
-        }
-        System.out.println("FINISH / ID=" + this.id);
+        System.out.println(id + " / " + modelId + " = FINISH");
         queue.decrement();
-        return new Result((start - System.currentTimeMillis()) / 1000.0);
+        return new Result((System.currentTimeMillis() - start) / 1000.0, queue.size());
     }
 }
