@@ -23,18 +23,13 @@ public class Model extends Thread {
         Shop shop = new Shop(executor, queue, statistic);
         shop.start();
 
-        Boolean flag = new Boolean(true);
-        FrameThread thread = new FrameThread(statistic, flag);
-
-        thread.start();
+        FrameThread frameThread= new FrameThread(statistic, executor, modelId);
+        frameThread.start();
 
         try {
             clientProducer.join();
             shop.join();
-
-            flag = false;
-            thread.join();
-
+            frameThread.join();
         } catch (Exception e){
 
         }

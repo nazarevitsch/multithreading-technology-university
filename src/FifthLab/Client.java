@@ -12,12 +12,12 @@ public class Client implements Callable<Result> {
         this.id = id;
         this.queue = queue;
         this.modelId = modelId;
-//        System.out.println(id + " / " + modelId + " = CREATED");
+        System.out.println(id + " / " + modelId + " = CREATED");
     }
 
     @Override
     public Result call() {
-//        System.out.println(id + " / " + modelId + " = START");
+        System.out.println(id + " / " + modelId + " = START");
         long start = System.currentTimeMillis();
         try {
             Thread.sleep((int) (Math.random() * (Constants.TIME_CASHIER_TO_MILLISECONDS

@@ -1,24 +1,27 @@
 package FifthLab;
 
+import java.util.concurrent.ExecutorService;
+
 public class FrameThread extends Thread{
 
     private StatisticCollector statisticCollector;
-    private Boolean flag;
+    private ExecutorService executor;
+    private int modelId;
 
-    public FrameThread(StatisticCollector statisticCollector, Boolean flag) {
+    public FrameThread(StatisticCollector statisticCollector, ExecutorService executor, int modelId) {
         this.statisticCollector = statisticCollector;
-        this.flag = flag;
+        this.executor = executor;
+        this.modelId = modelId;
     }
 
     @Override
     public void run() {
-        while (flag) {
+        while (!executor.isShutdown()) {
             try {
-                Thread.sleep(1200);
-                System.out.println(statisticCollector.collectTemporal());
+                Thread.sleep(1300);
+                System.out.println("\n---- Frame Statistic for model: " + modelId +  statisticCollector.collectTemporal());
             } catch (Exception e) {}
         }
-        System.out.println("NO");
     }
 
 }

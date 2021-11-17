@@ -39,8 +39,8 @@ public class Main {
 //        testSearchStatementInDocuments();
 
 //        testModel1();
-//        testModel2();
-        testModel3();
+        testModel2();
+//        testModel3();
     }
 
     public static void bankTest() {
@@ -169,8 +169,8 @@ public class Main {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
         WordsOccurringTable table = forkJoinPool.invoke(search);
 
-        System.out.println("OCCURRING: " + table.get("to").size() + " times.");
-        System.out.println(table.get("to"));
+        System.out.println("OCCURRING: " + table.get("on").size() + " times.");
+        System.out.println(table.get("on"));
 //        System.out.println(table.getKeys());
     }
 
@@ -194,7 +194,7 @@ public class Main {
 
         try {
             model1.join();
-            System.out.println(statistic1.collect());
+            System.out.println("IMITATION N1: \n" + statistic1.collect());
         } catch (Exception e) {}
     }
 
@@ -217,16 +217,16 @@ public class Main {
 
         try {
             model1.join();
-            System.out.println(statistic1.collect());
+            System.out.println("\nIMITATION N1:" + statistic1.collect());
 
             model2.join();
-            System.out.println(statistic2.collect());
+            System.out.println("\nIMITATION N2:" + statistic2.collect());
 
             model3.join();
-            System.out.println(statistic3.collect());
+            System.out.println("\nIMITATION N3:" + statistic3.collect());
 
             model4.join();
-            System.out.println(statistic4.collect());
+            System.out.println("\nIMITATION N4:" + statistic4.collect());
         } catch (Exception e) {}
     }
 
